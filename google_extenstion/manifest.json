@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "User Activity Monitor",
+    "version": "1.0",
+    "description": "Monitors clipboard, file uploads, and paste actions with user details.",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting",
+      "background",
+      "clipboardRead",
+      "clipboardWrite"
+    ],
+    "host_permissions": [
+      "https://docs.google.com/spreadsheets/*",
+      "<all_urls>"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "options_page": "popup.html",
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+  }
+  
