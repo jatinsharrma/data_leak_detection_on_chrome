@@ -154,6 +154,4 @@ log_collector/
 
 Feel free to submit issues or pull requests for improvements or bug fixes.
 
-## Contact
-
-For queries, please contact: [Your Email or GitHub Profile].
+## Whole code is generated using openAI and claude. 
