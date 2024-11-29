@@ -28,6 +28,7 @@ class PasteLog(db.Model):
     user_id = db.Column(db.String(50))
     pasted_text = db.Column(db.Text)
     url = db.Column(db.String(100))
+    copied_from_sheet = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime, default=datetime.now())
 
     def __repr__(self):
@@ -40,8 +41,11 @@ class PasteLog(db.Model):
             'user_id': 'User ID',
             'pasted_text': 'Pasted Text',
             'url': 'URL',
+            'copied_from_sheet': 'Copied From Sheet',
             'timestamp': 'Timestamp'
         }
+    
+
 
 class FileUploadLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)

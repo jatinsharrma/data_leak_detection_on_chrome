@@ -1,7 +1,5 @@
 from flask import Flask, request, render_template, jsonify
 from database import db, CopyLog, PasteLog, FileUploadLog, WhatsappFileUploadLog
-from flask_paginate import Pagination, get_page_parameter
-import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///logs.db'

@@ -5,27 +5,36 @@ document.addEventListener('copy', (event) => {
         
         const copiedData = event.clipboardData.getData("text");
         if (copiedData.trim() !== "") {
-            // Send the copied data to the background script
-            chrome.runtime.sendMessage({
-                action: "logCopy",
-                data: copiedData,
-                sheetUrl: window.location.href
+            chrome.storage.local.set({ lastCopiedData: copiedData }, () => {
+                // Send the copied data to the background script
+                chrome.runtime.sendMessage({
+                    action: "logCopy",
+                    data: copiedData,
+                    sheetUrl: window.location.href
+                });
             });
         }
     }
 });
 
-// Monitor paste events
+// Listen for paste events
 document.addEventListener("paste", (event) => {
-    const pastedData = (event.clipboardData || window.clipboardData).getData("text");
-    console.log("Pasted : ",pastedData , window.location.href);
-    // Send the copied data to the background script
-    chrome.runtime.sendMessage({
-            action: "logPaste",
-            data: pastedData,
-            website: window.location.href,
-            timestamp: new Date().toISOString(),
-    });
+    let pastedData = (event.clipboardData || window.clipboardData).getData("text");
+    
+    if (pastedData) {
+        // Get the last copied data from Chrome storage
+        chrome.storage.local.get("lastCopiedData", (result) => {
+            let lastCopiedData = result.lastCopiedData || null;
+
+            // Log the paste action with information on whether it matches the last copied data
+            chrome.runtime.sendMessage({
+                action: "logPaste",
+                data: pastedData,
+                url: window.location.href,
+                copiedFromSheet: pastedData === lastCopiedData, // Check if pasted content matches the last copied
+            });
+        });
+    }
 });
 
 (function () {

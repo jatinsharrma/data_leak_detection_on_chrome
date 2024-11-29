@@ -19,7 +19,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             body: JSON.stringify({
                 user_id : "1",
                 pasted_text: message.data,
-                url: message.url
+                url: message.url,
+                copied_from_sheet: message.copiedFromSheet,
             })
         }).then(() => console.log("Paste log sent"))
           .catch(error => console.error("Error logging paste event:", error));

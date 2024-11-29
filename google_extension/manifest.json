@@ -18,7 +18,6 @@
     "background": {
       "service_worker": "background.js"
     },
-    "options_page": "popup.html",
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
